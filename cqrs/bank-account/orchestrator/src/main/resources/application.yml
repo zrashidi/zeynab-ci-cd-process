@@ -1,0 +1,16 @@
+server:
+  port: 8083
+---
+spring.cloud.stream:
+  function:
+    definition: processor
+  bindings:
+    processor-in-0:
+      destination: Account-created
+    processor-out-0:
+      destination: Account-updated
+spring:
+  mvc:
+    converters:
+      preferred-json-mapper: gson
+

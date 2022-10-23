@@ -1,0 +1,34 @@
+server:
+  port: 5000
+
+spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: bankAccount
+  kafka:
+    producer:
+      bootstrap-servers: localhost:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+  listener:
+    ack-mode: MANUAL_IMMEDIATE
+  consumer:
+    bootstrap-servers: localhost:9092
+    group-id: bankaccConsumer
+    auto-offset-reset: earliest
+    key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+
+
+spring.cloud.stream:
+  function:
+    definition: supplier;consumer
+  bindings:
+    supplier-out-0:
+      destination: Account-created
+    consumer-in-0:
+      destination: Account-updated
+
